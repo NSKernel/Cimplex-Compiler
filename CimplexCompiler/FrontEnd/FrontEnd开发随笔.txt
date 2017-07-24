@@ -1,0 +1,31 @@
+﻿2015/02/03 寒假第五天
+
+    嗯……算到今天Cimplex项目已经搞了半年了，代码量也达到了2789行。话说这时候开始写开发随笔我也是醉了2333333。
+    从猪队友事件逼迫我重开Cimplex到现在也有了一个多月，这一个多月虽然代码量只有400，但是因为ParseDeclaraction真的是
+太操蛋，我对自己也是报以充分的理解~不管怎么说，Cimplex是个大项目，也是我目前独立搞过的最大、最具技术的项目，希望它一
+定要完成（必须啊喂！研学啊喂！）
+    说到ParseDeclaraction，今天通过奇葩的实验得到了一个新的技术用于使得诸如enmu和argument list后面不用带最后一个逗
+号。if (IndexNow < LexemeList.Count && LexemeList[IndexNow].Type != LexemeType.LV9_OPERATOR)，前面通过JumpLine，
+如果是最后一组了，那么JumpLine必然会使得指针指向最后一个+1，那么此时只需利用短路，如果第一个超界那么就不判定逗号，于是
+就实现了我们奸邪狡诈目的23333333333333333。
+
+2015/03/01 开学第一天
+    居然开学了TAT……
+	今天在弄ParseLogic，基本就剩for循环了。参考C#、C、Java的语言规范，没有一家说清楚两个分号隔开的到底是什么= =。为了
+简单起见，决定采用每个分号一个语句的设计，第一个只允许定义，剩下两个只允许表达式。但是这也带来了一个问题：定义语句的
+Definition该如何处理？对于ParseDeclaration来说，因为引索值本身就是全局变量，因此直接调用ParseExpression就好，可是这
+里是局部运行环境，我不可能去更改，因此决定将PaParseExpression函数做成一个壳，实际交由PaParseExpressionWorker来执行。
+PaParseExpressionWorker接受三个ref变量，分别是LexemeStream，PositionNow，PositionEnd。这样，我就可以通过发送ref变量
+来避免专门为ParseForSatement写一个表达式分析器。
+
+2015/03/06 开学第六天
+    打了一星期红警233333333333
+	今天依然在处理For语句的Bracket，而且由于整中期报告，今天干的事其实不多。代码量已经上涨到3429行了，比上星期多了400多
+行，也还算可以。For语句弄完了之后就剩Expression了，ParseErrorHandler真的不想弄了，下个版本再说……各个语句内都已经设上了
+LineNumber，这样代码生成时候就可以报行号了。下次一定长记性，早设计好，这次牵一发而动全身，到处都要改。
+
+2015/03/13 开学第十三天
+    因为电影节的音乐，这周又没怎么弄= =。
+	强行写完了ParseForStatement，总算开始弄Expression了。自从知道了逆波兰表达式后，我就一直奇怪为什么人们要使用中缀表达
+式，但是没办法，还是只能去解析那些蛋疼的玩意。之前拿Arduino写了一个简单的表达式解析器，但是这次将是一次苦战，因为运算符优
+先级有八个。想了想还是调度场算法了，真心不希望使用LR(1)算法，觉得好费劲。

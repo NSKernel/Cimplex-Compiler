@@ -1,0 +1,8 @@
+﻿需要: _Stack.cs
+
+    建立两个栈Symbol和Variable，Symbol中有一个最低优先级符号，
+Variable是空栈。当遇到id或值时，入Variable栈，若遇到的符号优先
+级高于Symbol栈栈顶符号的优先级，则入栈；否则计算Variable栈栈顶
+元素和Symbol栈栈顶符号的值，将值作为Variable进Variable栈。直到
+表达式元素全部处理结束，按顺序执行Variable栈和Symbol栈的元素，
+执行完毕后返回。

@@ -1,0 +1,74 @@
+﻿        // Originally ScInBracket
+        /*
+        /// <summary>
+        /// Process the contents in Bracket
+        /// </summary>
+        private void ScInBracket()
+        {
+            int BracketDepth = 1;                         // To show how many brackets there are.
+            for (; ScPositionNow < ScOriginalCode.Length && BracketDepth != 0; ScPositionNow++)
+            {
+                if (ScOriginalCode[ScPositionNow] == '"')
+                    ScInString(ScOriginalCode[ScPositionNow - 1] == '@', false);
+                else if (ScOriginalCode[ScPositionNow] == '\'')
+                    ScInChar(false);
+                else if (ScOriginalCode[ScPositionNow] == '(')
+                    BracketDepth += 1;
+                else if (ScOriginalCode[ScPositionNow] == ')')
+                    BracketDepth -= 1;
+                else if (ScOriginalCode[ScPositionNow] == '\n')
+                    ScLineCount += 1;
+            }
+            ScPositionNow -= 1;
+            if (BracketDepth != 0)
+            {
+                Error Error = new Error();
+                Error.ID = ErrorID.C0008;
+                Error.ErrorDetail = "A ')' must come after the contents in the bracket.";
+                Error.LineNo = ScLineCount;
+                ErrorHandler.ErrorHandler.EhErrorOutput(Error); 
+                ScStopScanning = true;
+            }
+            else
+            {
+                return;
+            }
+        } // ScInBracket : void
+        */
+		// Originally ScInSquareBracket
+        /*
+        /// <summary>
+        /// Process the contents in Square Bracket
+        /// </summary>
+        private void ScInSquareBracket()
+        {
+            int BracketDepth = 1;                         // To show how many brackets there are.
+            for (; ScPositionNow < ScOriginalCode.Length && BracketDepth != 0; ScPositionNow++)
+            {
+                if (ScOriginalCode[ScPositionNow] == '"')
+                    ScInString(ScOriginalCode[ScPositionNow - 1] == '@', false);
+                else if (ScOriginalCode[ScPositionNow] == '\'')
+                    ScInChar(false);
+                else if (ScOriginalCode[ScPositionNow] == '[')
+                    BracketDepth += 1;
+                else if (ScOriginalCode[ScPositionNow] == ']')
+                    BracketDepth -= 1;
+                else if (ScOriginalCode[ScPositionNow] == '\n')
+                    ScLineCount += 1;
+            }
+            ScPositionNow -= 1;
+            if (BracketDepth != 0)
+            {
+                Error Error = new Error();
+                Error.ID = ErrorID.C0008;
+                Error.ErrorDetail = "A ']' must come after the contents in the bracket.";
+                Error.LineNo = ScLineCount;
+                ErrorHandler.ErrorHandler.EhErrorOutput(Error); 
+                ScStopScanning = true;
+            }
+            else
+            {
+                return;
+            }
+        } // ScInSquareBracket : void
+        */

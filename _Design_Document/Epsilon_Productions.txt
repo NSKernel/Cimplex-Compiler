@@ -1,0 +1,110 @@
+﻿#define
+$modifier
+Class1_Modifier (c1m)             -> private
+                                   | public
+								   | protected
+Class2_Modifier (c2m)             -> virtual
+                                   | override
+Class3_Modifier (c3m)             -> static
+                                   | const
+								   | final
+$operators
+LV1_OPERATOR (l1o)                -> NUMBER++                            -> $singleopl
+                                   | NUMBER--                            -> $singleopl
+								   | PARENT.CHILD                        -> $doubleop
+LV2_OPERATOR (l2o)                -> ++NUMBER                            -> $singleopr
+                                   | --NUMBER                            -> $singleopr
+								   | !BOOL                               -> $singleopr
+								   | +NUMBER                             -> $singleopr
+								   | -NUMBER                             -> $singleopr
+LV3_OPERATOR (l2o)                -> *                                   -> $doubleop
+								   | /                                   |
+								   | %                                   |
+LV4_OPERATOR (l2o)                -> +                                   |
+								   | -                                   |
+LV5_OPERATOR (l2o)                -> <                                   |
+								   | >                                   |
+								   | <=                                  |
+								   | >=                                  |
+LV6_OPERATOR (l2o)                -> ==                                  |
+								   | !=                                  |
+LV7_OPERATOR (l2o)                -> &&                                  |
+								   | ||                                  |
+LV8_OPERATOR (l2o)                -> =                                   |
+								   | +=                                  |
+								   | -=                                  |
+								   | *=                                  |
+ 								   | /=                                  |
+								   | %=                                 -|
+//////// LV9_OPERATOR (l2o)       -> ,                                  
+$types
+type                              -> bool
+                                   | int
+                                   | float
+								   | double
+								   | char
+                                   | string
+lowerGradeType					  -> float:  int
+                                   | double: float, int
+name							  -> "^[a-zA-Z_]([a-zA-Z0-9]*)$"
+type.value                        -> bool:         true, false                                   -> TRUE, FALSE                               
+                                   | int/uint:     "^[0-9]*$"                                    -> INT_VALUE
+									               "^([0-9]*)(\.([0-9])*)?(E[+-]?([0-9]*))$"
+								   | float/double: "^([0-9]*)\.([0-9]*)$"                        -> FLOAT_VALUE
+===========================================================================================================================
+#production
+$decl
+type                              -> type name                                                     (private in default= =)
+                                   | type name (= type.value || lowerGradeType.Value || expr)?     (private in default= =)
+								   | type name bracket (block) 
+c1m                               -> c1m type name (= type.value || lowerGradeType.Value || expr)? 
+                                   | c1m type name bracket (block) 
+								   | c1m c2m type name bracket (block) 
+								   | c1m c3m type name (= type.value || lowerGradeType.Value || expr)?
+								   | c1m c3m type name bracket (block)  
+								   | c1m c2m c3m type name bracket (block) 
+c2m								  -> c2m type name bracket (block) 
+								   | c2m c3m type name bracket (block) 
+c3m                               -> c3m type name (= type.value || lowerGradeType.Value || expr)? 
+                                   | c3m type name bracket (block) 
+name                              -> name name (= new name());
+$action
+if                                -> if bracket block
+                                   | if bracket expr
+								   | if bracket block #nextstat.else                                (Remember to add 1 to the index of the statements in the execute manager)
+								   | if bracket expr  #nextstat.else
+else                              -> #throwerror = =
+for								  -> for bracket expr
+                                   | for bracket block
+while                             -> while bracket expr
+                                   | while bracket block
+do  							  -> do expr while bracket
+                                   | do block while bracket
+try                               -> try expr catch expr
+                                   | try expr catch block
+								   | try block catch expr
+								   | try block catch block
+								   | try expr finally expr
+								   | try expr finally block
+								   | try block finally expr
+								   | try block finally block
+                                   | try expr catch expr finally expr
+                                   | try expr catch expr finally block
+								   | try expr catch block finally expr
+								   | try block catch expr finally expr
+								   | try expr catch block finally block
+								   | try block catch expr finally block
+								   | try block catch block finally expr
+								   | try block catch block finally block
+forbracket						  -> optionaldeclaration ; optionalexpressionbool ; optionalexpression
+$expr
+id                                -> name C($doubleop, '=' && single) expr, return operator.type
+								   | value C($doubleop, '=') expr, return operator.type
+								   | C($singleopr, '=') name C($doubleop, '=' && single) expr, return operator.type
+								   | C($singleopr, '=') value C($doubleop, '=' && single) expr, return operator.type
+								   | name C($singleopr, '=') C($doubleop, '=' && single) expr, return operator.type
+								   | value C($singleopr, '=') C($doubleop, '=' && single) expr, return operator.type
+								   | C($singleopr, '=') name
+								   | C($singleopr, '=') value
+								   | name C($singleopr, '=')
+								   | value C($singleopr, '=')

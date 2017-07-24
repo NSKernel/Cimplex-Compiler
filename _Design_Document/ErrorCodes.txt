@@ -1,0 +1,14 @@
+﻿ECode|Error Details
+================================================================
+Scanner Errors:
+================================================================
+C0001|End-note sign is invalid. /* not found
+C0002|Character is invalid.
+C0003|Escape char is invalid.
+C0004|Char is invalid. The "char" type consists of one character.
+C0005|Bitwise operators are not allowed.
+C0006|Unexpected symbol '<symbol>'.
+C0007|Statement ended with and unexpected character.
+C0008|End-Bracket/Brace sign is not found.
+C0009|Unexpected lexeme.
+================================================================
